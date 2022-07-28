@@ -1,0 +1,170 @@
+html, body {
+  margin:0px;
+  padding: 0px;
+}
+
+body{
+  background-image: url("bg1.jpg");
+  background-size: cover;
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+.app {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  height:100vh
+}
+
+.time {
+  position: fixed;
+  bottom: 0px;
+}
+
+.clock {
+  color: white;
+  font-size: 4.7em;
+  margin: 1px;
+  margin-left: 15px;
+  margin-bottom: 0px;
+}
+
+.date {
+  color: white;
+  font-size: 1.2em;
+  margin: 1px;
+  margin-bottom: 10px;
+  margin-left: 15px;
+}
+
+.notif {
+  position: fixed;
+  right: 10px;
+  bottom: 10px;
+}
+.snap {
+  background-image: linear-gradient(
+    140deg,
+    rgba(7, 245, 67, 0.986),
+    rgb(161, 233, 182)
+  );
+  background-color: aliceblue;
+  border-radius: 10px;
+  padding: 8px;
+  margin: 10px;
+  margin-bottom: 10px;
+  opacity: 0.9;
+}
+
+#srcEngineName {
+  display: inline;
+  color: rgba(92, 93, 94, 0.801);
+  opacity: 0.6;
+}
+
+.title {
+  display: inline-block;
+  margin: 5px;
+  font-size: medium;
+  color: rgba(49, 49, 49, 0.904);
+}
+
+.search {
+  background-color: rgb(234, 240, 245);
+  width: 60%;
+  height: 40px;
+  margin: auto;
+  margin-top: 20px;
+  border-radius: 20px;
+  padding: 0;
+}
+
+#btnSearch {
+  height: 42px;
+  width: 15%;
+  border-radius: 30px;
+  border-color: white;
+  border-style: none;
+  background-color: blue;
+  margin: 0px;
+  margin-top: 0px;
+  padding: 1px;
+  color: white;
+}
+
+
+
+#inputSearch {
+  width: 65%;
+  height: 40px;
+  background: none;
+  border: 0;
+}
+
+.inputSearch :active {
+  border: none;
+}
+
+#searchEngine {
+  position: relative;
+  right: 0px;
+  margin: 0;
+  display: inline-block;
+  height: 1em;
+  width: 1em;
+}
+
+/* ---------apps---------- */
+.userApp {
+  /* add flex or whaterer */
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+
+  gap: 10px;
+  row-gap: 10px;
+  column-gap: 60px;
+
+  margin: 2px;
+  background-color: rgba(219, 227, 233, 0.438);
+  border-radius: 10px;
+  padding: 10px;
+  margin: 40px;
+  height: 45px;
+}
+
+.userApp :hover{
+  height: 30px;
+
+
+
+}
+
+.appSnap{
+  flex-direction: row;
+}
+.appSnap img {
+  height: 25px;
+  width: auto;
+}
+
+
+/* -----------------greeeting------------- */
+
+.greetings{
+
+  color: white;
+  font-size: medium;
+  text-align: center;
+  position: fixed;
+  left: 0;
+  top: 0;
+  margin: 20px;
+  width: 8em;
+
+}
+.app{
+  opacity: 1.0;
+}
