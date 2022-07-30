@@ -6,8 +6,52 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>welcome!o!o!</title>
     <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet"
+  href="https://fonts.googleapis.com/css?family=Poppins">
   </head>
   <body>
+
+    <!-- setup screen -->
+
+    <div class="setup">
+      <div class="setup-question">
+        <div class="question">
+          <h1>Hello there,<br> Welcome to BlueBery</h1> 
+        </div>
+        <div class="answer">
+        <input type="text" name="" id="inputAnswer">
+        <button id="btnSend">Ok</button>
+      </div>
+
+      <div class="setup-form">
+        <div class="setup-form-option">
+          which background you prefer?
+          <input type="radio" name=""  id="radio-bg-Dark">Dark
+          <input type="radio" name="" id="radio-bh-light">Light 
+        </div>
+        <div class="setup-form-option">
+          Wanna see your Location and weather?
+          <input type="radio" name=""  id="radio-wther-yes">Yes,Sure
+          <input type="radio" name="" id="radio-wther-no">Nope 
+        </div>
+        <button id="btnSubmitForm"> I'M done</button>
+      </div>
+
+      <div class="setup-modal">
+        <button id="btn-modal-close">close</button>
+        <div class="title">
+          Thank you for choosing BluBery
+        </div>
+        <div class="setup-modal-content">
+          hello there hope you will have a pleasent jourey<br>
+        </div>
+      </div>
+      </div>
+      
+
+    </div>
+
+
     <div class="app">
       <!-- the Search bar -->
       <div class="search">
@@ -17,7 +61,25 @@
           DuckDuckgo
         </div>
       </div>
-      <!-- welcome user -->
+
+       <!--  search engine model-window -->
+       <div class="search-selector">
+        <div class="search-title">
+          Choose your Engine
+        </div>
+        <div class="search-engine-snap">
+
+          <div class="search-snap">
+            <img src="icons/google.svg" alt="icon" class="icon-small">
+            <div class="search-snap-title">
+              Google
+            </div>
+          </div> 
+
+        </div>
+       </div>
+
+      <!-- greetings user -->
       <div class="greetings">
         Welcome,<br>Anurag :)
       </div>
@@ -53,9 +115,10 @@
         </div>
 
         <div class="appSnap">
-          <img src="icons/google.svg" alt="ico">
+          <img src="icons/yt.svg" alt="ico">
         </div>
       </div>
+      
     
       <!-- the date time display -->
       <div class="time">
