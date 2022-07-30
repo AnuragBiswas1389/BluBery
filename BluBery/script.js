@@ -7,10 +7,10 @@ const btnSearch = document.getElementById("btnSearch");
 const inputText = document.getElementById("inputSearch");
 const labelEngineName = document.getElementById("srcEngineName");
 
-const d = new Date();
-const day = d.getDay();
-const dt = d.getDate();
-const month = d.getMonth();
+const now = new Date();
+const day = now.getDay();
+const dt = now.getDate();
+const month = now.getMonth();
 
 var notifID = 0;
 
@@ -21,47 +21,29 @@ function showClock() {
   const min = d.getMinutes();
   const sec = d.getSeconds();
   if (sec % 2 == 0) {
-    clock.textContent = `${hour > 12.0 ? hour - 12.0 : hour}:${min} ${
-      hour > 12 ? "pm" : "am"
-    }`;
+    clock.textContent = `${hour > 12.0 ? hour - 12.0 : hour}:${min
+      .toString()
+      .padStart(2, "0")} ${hour > 12 ? "PM" : "AM"}`;
   } else {
-    clock.textContent = `${hour > 12 ? hour - 12 : hour} ${min} ${
-      hour > 12 ? "pm" : "am"
-    }`;
+    clock.textContent = `${hour > 12 ? hour - 12 : hour} ${min
+      .toString()
+      .padStart(2, "0")} ${hour > 12 ? "PM" : "AM"}`;
   }
 }
 
 setInterval(showClock, 1000);
-showDate(dt, month, day - 1);
+showDate();
 
 //show date...................
 
 function showDate(dt = 17, mon = 9, day) {
-  const month = [
-    "January",
-    "February",
-    "March",
-    "April",
-    "May",
-    "June",
-    "July",
-    "August",
-    "September",
-    "October",
-    "November",
-    "December",
-  ];
-
-  const days = [
-    "Monday",
-    "Tuesday",
-    "Wednesday",
-    "Thursday",
-    "Friday",
-    "Satarday",
-    "Sunday",
-  ];
-  date.textContent = `${dt} ${month[mon]}, ${days[day]}`;
+  options = {
+    day: "numeric",
+    month: "long",
+    weekday: "long",
+  };
+  const now = new Date();
+  date.textContent = new Intl.DateTimeFormat("en-IN", options).format(now);
 }
 
 //Location of the user...................
@@ -100,8 +82,6 @@ function genSnap(tit, cont, imgSrc = "") {
   return snap;
 }
 
-//setInterval(getLocation, 1000);
-
 //show snap
 function showSnap(html) {
   notifID++;
@@ -117,22 +97,11 @@ function removeSnap() {
 
 //setting the search Functionality.....
 
+var select = 1;
 
-var select =1;
-var searcher='google';
-
-  // add search engines here.. and there search pattern..
-const searchEngine ={
-  const dname = ['google','duckduckgo','youtube'] 
-
-};
-
-  //change the searchEngine on click 
-labelEngineName.addEventListener('click', function(e){
-  
- labelEngineName.textContent="hello";
-  
-})
+labelEngineName.addEventListener("click", function (e) {
+  labelEngineName.textContent = "hello";
+});
 
 btnSearch.addEventListener("click", function (e) {
   const searchText = inputText.value.split(" ").join("+");
@@ -141,3 +110,13 @@ btnSearch.addEventListener("click", function (e) {
     window.open(`https://www.google.com/search?q=${searchText}`);
   }
 });
+
+//-------------------local data storge---------------------------
+
+function localData(ke, val) {
+  localStorage.setItem(ke, val);
+}
+
+function sessionData(ke, val) {
+  sessionStorage.setItem(ke, val);
+}
