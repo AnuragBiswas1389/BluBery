@@ -14,36 +14,41 @@
     <!-- setup screen -->
 
     <div class="setup">
-      <div class="setup-question">
-        <div class="question">
+
+      <div class="setup-convo">
+        <div class="setup-question">
           <h1>Hello there,<br> Welcome to BlueBery</h1> 
         </div>
-        <div class="answer">
-        <input type="text" name="" id="inputAnswer">
-        <button id="btnSend">Ok</button>
+      
+        <div class="setup-answer">
+         <input type="text" name="" id="inputAnswer">
+          <button id="btnSend">Ok</button>
+        </div>
       </div>
 
       <div class="setup-form">
         <div class="setup-form-option">
           which background you prefer?
-          <input type="radio" name=""  id="radio-bg-Dark">Dark
-          <input type="radio" name="" id="radio-bh-light">Light 
+          <div class="setup-radio-container">
+            <input type="radio" name=""  id="radio-bg-Dark" class="setup-radio">Dark
+          <input type="radio" name="" id="radio-bh-light" class="setup-radio" >Light 
+          </div>
         </div>
+
         <div class="setup-form-option">
           Wanna see your Location and weather?
-          <input type="radio" name=""  id="radio-wther-yes">Yes,Sure
-          <input type="radio" name="" id="radio-wther-no">Nope 
+          <div class="setup-radio-container">
+              <input type="radio" name=""  id="radio-wther-yes" class="setup-radio">Yes,Sure
+            <input type="radio" name="" id="radio-wther-no" class="setup-radio">Nope 
+          </div>
         </div>
-        <button id="btnSubmitForm"> I'M done</button>
+        <button id="btnSubmitForm" class="setup-btn"> I'M done</button>
       </div>
 
       <div class="setup-modal">
-        <button id="btn-modal-close">close</button>
-        <div class="title">
-          Thank you for choosing BluBery
-        </div>
-        <div class="setup-modal-content">
-          hello there hope you will have a pleasent jourey<br>
+        <div class="setup-modal-title">
+          <h1>Thank you for choosing BluBery</h1>
+          Setting up things for you :>
         </div>
       </div>
       </div>

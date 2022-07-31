@@ -213,3 +213,120 @@ body {
 
 .search-snap-title {
 }
+
+/* -----------------the setup section------------------------ */
+
+.setup {
+  display: block;
+  margin: 1rem;
+}
+
+/* ----setup convo------ */
+
+.setup-convo {
+  display: block;
+  z-index: 1;
+}
+
+.setup-question {
+  font-size: 1.5rem;
+}
+
+.setup-answer {
+  position: fixed;
+  background-color: rgba(108, 33, 179, 0.733);
+  right: 1rem;
+  bottom: 1rem;
+  width: 30%;
+  height: 10%;
+  border-radius: 1rem;
+  border-style: none;
+}
+
+.setup-answer input {
+  width: 85%;
+  height: 97%;
+  background-color: rgba(196, 191, 201, 0.767);
+  border-style: none;
+  border-radius: inherit;
+  font-size: larger;
+  position: relative;
+}
+
+.setup-answer button {
+  width: 13.1%;
+  height: 100%;
+  border-style: none;
+  border-radius: inherit;
+  opacity: 1;
+  font-size: medium;
+  background-color: rgb(230, 203, 255);
+  color: rgb(2, 2, 2);
+  position: absolute;
+  right: 0;
+}
+
+.setup-btn {
+}
+/*---------- setup form----------- */
+.setup-form {
+  height: 40%;
+  background-color: blueviolet;
+  width: 100vh;
+  margin: auto;
+  padding: 1rem;
+  border-radius: 10px;
+  border-style: none;
+  color: white;
+  position: relative;
+  z-index: 2;
+  /* ----form display---------- */
+  display: none;
+}
+
+.setup-radio-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  margin: 10px;
+}
+
+.setup-radio {
+  margin: 5px;
+}
+
+.setup-btn {
+  position: absolute;
+  right: 0px;
+  bottom: 0px;
+  height: 2rem;
+  width: auto;
+  border-style: none;
+  border-top-left-radius: inherit;
+  border-bottom-right-radius: inherit;
+}
+
+/* --------- modal-window------------ */
+
+.setup-modal {
+  color: rgb(61, 60, 60);
+  z-index: 100;
+  position: fixed;
+  /* -div compensation- */
+  top: 50%;
+  left: 50%;
+  width: 30em;
+  height: 18em;
+  margin-top: -9em; /*set to a negative number 1/2 of your height*/
+  margin-left: -15em; /* set to a negative number 1/2 of your width*/
+  /* --display- */
+  display: none;
+}
+
+.setup-modal-title {
+  text-align: center;
+}
+
+.setup-modal-content {
+  text-align: center;
+}
