@@ -43,6 +43,7 @@ const inputText = document.getElementById("inputSearch");
 const inputSetupAnswer = document.querySelector("#inputAnswer");
 // -------------------------------variables----------------
 var notifID = 0;
+var db = null; //indexedDB refernce variable
 
 // ---------- universal date ------------
 const now = new Date();
@@ -57,8 +58,7 @@ setInterval(function () {
 }, 1500);
 
 setInterval(function () {
-  userApps.classList.add( "visible");
-
+  userApps.classList.add("visible");
 }, 1500);
 
 //----------------------------------------show clock------------------------------------------
@@ -202,7 +202,41 @@ labelEngineName.addEventListener("click", function (e) {
   }
 });
 
-//------------------------------------------local data storge------------------------------------------
+//------------------------------------------ data storge------------------------------------------
+
+initDB("firstDB", "3", "allNames", "id");
+
+// objStore={name:"objectStoreName", keyPath: "keyPath"}
+function initDB(dbname, version, objectStoreName, keypath) {
+  const request = indexedDB.open(dbname, version);
+
+  //on upgrade needed
+  request.onupgradeneeded = (e) => {
+    db = e.target.result;
+    db.createObjectStore(objectStoreName, { keyPath: keypath });
+  };
+
+  request.onsuccess = (e) => {
+    db = e.target.result;
+  };
+  request.onerror = (e) => {
+    alert("Database Error Occured!" + e);
+  };
+}
+
+
+ insertData("firstDB", "newNames", (data = { id: "2", Name: "blue butter" }));
+
+function insertData(dbname, dbObjName, data) {
+  const request = indexedDB.open(dbname);
+  const dbo = dbObjName;
+  request.onsuccess = (e) => {
+    db = e.target.result;
+    const tx = db.transaction(dbo, "readwrite");
+    const objStore = tx.objectStore(dbo);
+    objStore.add(data);
+  };
+}
 
 // ------------------------------------------------------setup--------------------------------------------
 
