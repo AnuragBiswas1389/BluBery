@@ -5,8 +5,8 @@ body {
 }
 
 body {
-  background-image: url("bg1.jpg");
-  /* background-image: linear-gradient(white, rgba(160, 158, 158, 0.644)); */
+  /* background-image: url("bg1.jpg"); */
+  /* background-image: linear-gradient(white, rgba(160, 158, 158, 0.644));  */
   background-size: cover;
   background-attachment: fixed;
   background-repeat: no-repeat;
@@ -220,9 +220,6 @@ body {
   padding: 0;
 }
 
-.search-snap-title {
-}
-
 /* -----------------------------------------------Setup-------------------------------- */
 
 .setup {
@@ -231,6 +228,9 @@ body {
 }
 
 /* ----setup convo------ */
+.setup {
+  display: none;
+}
 
 .setup-convo {
   display: none;
@@ -278,8 +278,6 @@ body {
   right: 0;
 }
 
-.setup-btn {
-}
 /*---------- setup form----------- */
 .setup-form {
   height: 40%;
@@ -346,20 +344,22 @@ body {
 
 .remove {
   display: none;
+  opacity: 0;
 }
 .add {
   display: block;
-}
-.visible {
   opacity: 1;
+}
+.invisible {
+  opacity: 0;
 }
 /* -----------------------------------------------animation classes-------------------------------- */
 .fade-in {
-  -webkit-animation: fadein 0.51s; /* Safari, Chrome and Opera > 12.1 */
-  -moz-animation: fadein 0.51s; /* Firefox < 16 */
-  -ms-animation: fadein 0.51s; /* Internet Explorer */
-  -o-animation: fadein 0.51s; /* Opera < 12.1 */
-  animation: fadein 0.51s;
+  -webkit-animation: fadein 2.5s; /* Safari, Chrome and Opera > 12.1 */
+  -moz-animation: fadein 2.5s; /* Firefox < 16 */
+  -ms-animation: fadein 2.5s; /* Internet Explorer */
+  -o-animation: fadein 2.5s; /* Opera < 12.1 */
+  animation: fadein 2.5s;
 }
 
 @keyframes fadein {
@@ -412,11 +412,11 @@ body {
 }
 
 .fade-out {
-  -webkit-animation: fadeout 0.51s; /* Safari, Chrome and Opera > 12.1 */
-  -moz-animation: fadeout 0.51s; /* Firefox < 16 */
-  -ms-animation: fadeout 0.51s; /* Internet Explorer */
-  -o-animation: fadeout 0.51s; /* Opera < 12.1 */
-  animation: fadeout 0.51s;
+  -webkit-animation: fadeout 2.5s; /* Safari, Chrome and Opera > 12.1 */
+  -moz-animation: fadeout 2.5s; /* Firefox < 16 */
+  -ms-animation: fadeout 2.5s; /* Internet Explorer */
+  -o-animation: fadeout 2.5s; /* Opera < 12.1 */
+  animation: fadeout 2.5s;
 }
 
 @keyframes fadeout {
@@ -466,4 +466,8 @@ body {
   to {
     opacity: 1;
   }
+}
+/* ------------color class---------------------- */
+.linearGradient {
+  background-image: linear-gradient(white, rgba(160, 158, 158, 0.644));
 }

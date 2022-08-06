@@ -1,5 +1,7 @@
 `use strict`;
 
+const body = document.getElementById("body");
+
 const clock = document.querySelector(".clock");
 const date = document.querySelector(".date");
 const notification = document.querySelector(".notif");
@@ -23,6 +25,9 @@ const userApps = document.querySelector(".userApp");
 //greetings
 const greet = document.querySelector(".greetings");
 
+//setup
+const setup = document.querySelector(".setup");
+
 // setup convo
 const setupConvo = document.querySelector(".setup-convo");
 const setupQuestion = document.querySelector(".setup-question");
@@ -44,6 +49,7 @@ const inputSetupAnswer = document.querySelector("#inputAnswer");
 // -------------------------------variables----------------
 var notifID = 0;
 var db = null; //indexedDB refernce variable
+var convoComplete=false;
 
 // ---------- universal date ------------
 const now = new Date();
@@ -51,16 +57,108 @@ const day = now.getDay();
 const dt = now.getDate();
 const month = now.getMonth();
 
-//----------------------------------------App display control------------------------------------------
+// --------app controll flow-------
+/*
+  start up-
+1. checking for userName in local storage - if now present then -
+2. load the setup screen - setup follows the roder-
+    1.load conversation --- take input of the user name..
+    2.load the form --- take the user input..
+    3.show the loading screen for 3s..
 
-setInterval(function () {
-  app.classList.add("fade-in", "add");
-}, 1500);
+    3.load the app  ---
+      1.prepare the userApps database.. 
+      2.prepare the searchEngie database..
+*/
 
-setInterval(function () {
-  userApps.classList.add("visible");
-}, 1500);
+//---------------------------------------- display control------------------------------------------
 
+function setUp() {
+  app.classList.add("remove");
+
+  //setting the bakground color
+  body.classList.add("linearGradient");
+
+  //making the setup visible
+  setup.classList.add("add");
+
+  //setting the conversation visible
+  setupConvo.classList.add("add");
+
+  //setting the setup questions visible
+  setupQuestion.classList.add("fade-in");
+
+  //setting up the next questions
+  setTimeout(() => {
+    setupQuestion.innerHTML = `<h1>Let us know eachother<br> shall we?</h1>`;
+    setTimeout(() => {
+      setupQuestion.classList.add("fade-out", "invisible");
+    }, 500);
+  }, 2500);
+  setTimeout(() => {
+    setupQuestion.classList.remove("fade-out", "invisible");
+    setupQuestion.classList.add("fade-in");
+    setupQuestion.innerHTML = `<h1>So, What is your name?</h1>`;
+  }, 5600);
+
+  //setting the answers visible
+  setTimeout(() => {
+    setupAnswer.classList.add("add", "fade-in");
+    setupQuestion.classList.remove("fade-in");
+  }, 5650);
+  btnSetupAnswerSend.addEventListener("click", function () {
+    localStorage.setItem("userName", `${inputSetupAnswer.value}`);
+    setupAnswer.classList.add("fade-out", "invisible");
+
+    setTimeout(() => {
+      setupQuestion.classList.remove("fade-out", "invisible");
+      setupQuestion.classList.add("fade-in");
+      setupQuestion.innerHTML = `<h1>Nice to meet you<br> ${localStorage.getItem(
+        "userName"
+      )}!</h1>`;
+    }, 1500);
+
+    setTimeout(() => {
+      setupQuestion.classList.remove("fade-in");
+      setupQuestion.classList.add("fade-out","invisible");
+    }, 3000);
+
+    setTimeout(() => {
+      setupQuestion.classList.remove("fade-out", "invisible");
+      setupQuestion.classList.add("fade-in");
+      setupQuestion.innerHTML = `<h1>Now lets complete the last steps!</h1>`;
+    }, 4500);
+
+    setTimeout(() => {
+      setupQuestion.classList.remove("fade-in");
+      setupQuestion.classList.add("fade-out", "invisible");
+      getOptions();
+  
+    }, 6000);
+  });
+  //setting the form visible-----
+  function getOptions(){
+    setupFrom.classList.add("add");
+    //get the choices from the form and stor it in the local storage here
+    btnSubmitSetupForm.addEventListener('click',function(e){
+      setupFrom.classList.add("fade-out", "invisible");
+      setupModal.classList.add("add","fade-in");
+    })
+  }
+  
+}
+
+setUp();
+
+function loadApp() {
+  setInterval(function () {
+    app.classList.add("fade-in", "add");
+  }, 1500);
+
+  setInterval(function () {
+    userApps.classList.add("visible");
+  }, 1500);
+}
 //----------------------------------------show clock------------------------------------------
 setInterval(function () {
   clock.classList.add("fade-in", "add");
@@ -224,8 +322,7 @@ function initDB(dbname, version, objectStoreName, keypath) {
   };
 }
 
-
- insertData("firstDB", "newNames", (data = { id: "2", Name: "blue butter" }));
+//  insertData("firstDB", "newNames", (data = { id: "2", Name: "blue butter" }));
 
 function insertData(dbname, dbObjName, data) {
   const request = indexedDB.open(dbname);
@@ -237,6 +334,33 @@ function insertData(dbname, dbObjName, data) {
     objStore.add(data);
   };
 }
+
+// const cursor = getData("firstDB", "newNames");
+// if (cursor) {
+//   console.log(cursor);
+// }
+
+// function getData(DBName, objName) {
+//   const req = indexedDB.open(DBName);
+//   var request = null;
+//   var obj = objName;
+//   var cursor = "nope";
+//   req.onsuccess = (e) => {
+//     db = e.target.result;
+//     const tx = db.transaction(obj, "readonly");
+//     const pNotes = tx.objectStore(obj);
+//     request = pNotes.openCursor();
+
+//      request.onsuccess = (e) => {
+//      const  cursor = e.target.result;
+//       return cursor;
+//     };
+//   };
+//   if (cursor) {
+//     console.log(cursor);
+//   }
+//   return cursor;
+// }
 
 // ------------------------------------------------------setup--------------------------------------------
 
