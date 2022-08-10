@@ -49,7 +49,7 @@ const inputSetupAnswer = document.querySelector("#inputAnswer");
 // -------------------------------variables----------------
 var notifID = 0;
 var db = null; //indexedDB refernce variable
-var convoComplete=false;
+var convoComplete = false;
 
 // ---------- universal date ------------
 const now = new Date();
@@ -120,7 +120,7 @@ function setUp() {
 
     setTimeout(() => {
       setupQuestion.classList.remove("fade-in");
-      setupQuestion.classList.add("fade-out","invisible");
+      setupQuestion.classList.add("fade-out", "invisible");
     }, 3000);
 
     setTimeout(() => {
@@ -133,26 +133,30 @@ function setUp() {
       setupQuestion.classList.remove("fade-in");
       setupQuestion.classList.add("fade-out", "invisible");
       getOptions();
-  
     }, 6000);
   });
   //setting the form visible-----
-  function getOptions(){
+  function getOptions() {
     setupFrom.classList.add("add");
     //get the choices from the form and stor it in the local storage here
-    btnSubmitSetupForm.addEventListener('click',function(e){
+    btnSubmitSetupForm.addEventListener("click", function (e) {
       setupFrom.classList.add("fade-out", "invisible");
-      setupModal.classList.add("add","fade-in");
-    })
+      setupModal.classList.add("add", "fade-in");
+      setTimeout(() => {
+        loadApp();
+      }, 2000);
+    });
   }
-  
 }
 
 setUp();
 
 function loadApp() {
+  setup.classList.remove("add");
+  app.classList.remove("add");
+  body.classList.remove("linearGradient");
   setInterval(function () {
-    app.classList.add("fade-in", "add");
+    app.classList.add("fade-in-short", "add");
   }, 1500);
 
   setInterval(function () {
@@ -161,11 +165,12 @@ function loadApp() {
 }
 //----------------------------------------show clock------------------------------------------
 setInterval(function () {
-  clock.classList.add("fade-in", "add");
-  date.classList.add("fade-in", "add");
+  clock.classList.add("fade-in-short", "add");
+  date.classList.add("fade-in-short", "add");
 }, 2500);
 
 setInterval(showClock, 1000);
+
 function showClock() {
   const d = new Date();
 
@@ -291,11 +296,11 @@ btnSearch.addEventListener("click", function (e) {
 
 labelEngineName.addEventListener("click", function (e) {
   if (!srchEngineWindow.classList.contains("add")) {
-    srchEngineWindow.classList.add("add", "fade-in");
+    srchEngineWindow.classList.add("add", "fade-in-short");
   } else {
-    srchEngineWindow.classList.add("fade-out");
+    srchEngineWindow.classList.add("fade-out-short");
     setTimeout(function () {
-      srchEngineWindow.classList.remove("add", "fade-out");
+      srchEngineWindow.classList.remove("add", "fade-out-short");
     }, 150);
   }
 });
