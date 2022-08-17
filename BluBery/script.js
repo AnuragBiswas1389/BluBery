@@ -18,6 +18,7 @@ const app = document.querySelector(".app");
 const srchEngineWindow = document.querySelector(".search-selector");
 const srchEngineSnapArea = document.querySelector(".search-engine-snap");
 const srchEngineSnap = document.querySelector(".search-snap");
+const btnSearchWindowClose = document.querySelector("#btn-search-close");
 
 //userApps
 const userApps = document.querySelector(".userApp");
@@ -57,21 +58,19 @@ const day = now.getDay();
 const dt = now.getDate();
 const month = now.getMonth();
 
-// --------app controll flow-------
-/*
-  start up-
-1. checking for userName in local storage - if now present then -
-2. load the setup screen - setup follows the roder-
-    1.load conversation --- take input of the user name..
-    2.load the form --- take the user input..
-    3.show the loading screen for 3s..
+// --control calls--
 
-    3.load the app  ---
-      1.prepare the userApps database.. 
-      2.prepare the searchEngie database..
-*/
+startApp();
 
-//---------------------------------------- display control------------------------------------------
+function startApp() {
+  if (localStorage.getItem("userName") != null) {
+    loadApp();
+  } else {
+    setUp();
+  }
+}
+
+//---------------------------------------- setup------------------------------------------
 
 function setUp() {
   app.classList.add("remove");
@@ -149,7 +148,7 @@ function setUp() {
   }
 }
 
-setUp();
+// -----------------------------------------------------App Loading------------------------
 
 function loadApp() {
   setup.classList.remove("add");
@@ -163,7 +162,7 @@ function loadApp() {
     userApps.classList.add("visible");
   }, 1500);
 }
-//----------------------------------------show clock------------------------------------------
+//----------------------------------------display clock------------------------------------------
 setInterval(function () {
   clock.classList.add("fade-in-short", "add");
   date.classList.add("fade-in-short", "add");
@@ -237,17 +236,20 @@ function genSnap(tit, cont, imgSrc = "") {
   return snap;
 }
 
-//------------------------show Notification-snap-------------------------------------------------------
+//------------------------ Notification-snap-------------------------------------------------------
 function showSnap(html) {
+  notification.classList.add("add");
   notifID++;
-  if (notifID >= 3) {
+  setTimeout(() => {
     removeSnap();
-    notifID = 0;
-  }
+  }, 2500);
   notification.insertAdjacentHTML("afterbegin", html);
 }
 function removeSnap() {
-  notification.innerHTML = "";
+  notification.classList.add("fade-out-short");
+  setTimeout(() => {
+    notification.innerHTML = "";
+  }, 1500);
 }
 //-------------------------------------------------------Greetings----------------------------------------------
 greeting();
@@ -272,15 +274,11 @@ function greeting() {
 
 //--------------------------------------------setting the search Functionality-----------------------------------------
 
-labelEngineName.innerText = "click to change engine";
+labelEngineName.innerText = "change engine?";
 
 setTimeout(function () {
   labelEngineName.innerText = localStorage.getItem("srchEngineName");
 }, 4500);
-
-// 1.when user selects search engine
-// 2. Store the base search url in the local storage key -'srchEngineURL'
-// 3. Stor the engine name in the local storage key - 'srchEngineName'
 
 btnSearch.addEventListener("click", function (e) {
   const searchText = inputText.value.split(" ").join("+");
@@ -294,15 +292,22 @@ btnSearch.addEventListener("click", function (e) {
 
 // --------------------------------------search engine selector window function---------------------
 
-labelEngineName.addEventListener("click", function (e) {
+function handelSearchWindow(e) {
   if (!srchEngineWindow.classList.contains("add")) {
     srchEngineWindow.classList.add("add", "fade-in-short");
   } else {
     srchEngineWindow.classList.add("fade-out-short");
     setTimeout(function () {
       srchEngineWindow.classList.remove("add", "fade-out-short");
-    }, 150);
+    }, 1500.1);
   }
+}
+labelEngineName.addEventListener("click", function (e) {
+  handelSearchWindow();
+});
+
+btnSearchWindowClose.addEventListener("click", function (e) {
+  handelSearchWindow();
 });
 
 //------------------------------------------ data storge------------------------------------------
@@ -340,36 +345,4 @@ function insertData(dbname, dbObjName, data) {
   };
 }
 
-// const cursor = getData("firstDB", "newNames");
-// if (cursor) {
-//   console.log(cursor);
-// }
-
-// function getData(DBName, objName) {
-//   const req = indexedDB.open(DBName);
-//   var request = null;
-//   var obj = objName;
-//   var cursor = "nope";
-//   req.onsuccess = (e) => {
-//     db = e.target.result;
-//     const tx = db.transaction(obj, "readonly");
-//     const pNotes = tx.objectStore(obj);
-//     request = pNotes.openCursor();
-
-//      request.onsuccess = (e) => {
-//      const  cursor = e.target.result;
-//       return cursor;
-//     };
-//   };
-//   if (cursor) {
-//     console.log(cursor);
-//   }
-//   return cursor;
-// }
-
-// ------------------------------------------------------setup--------------------------------------------
-
-function starter() {
-  // startInterval();
-  setupQuestion.innerHTML = `<h1>Let us know each other<br> shall we?<h1>`;
-}
+// ------------------------------------------------------App data loading--------------------------------------------
