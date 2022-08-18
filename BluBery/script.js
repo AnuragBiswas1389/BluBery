@@ -21,6 +21,16 @@ const srchEngineSnap = document.querySelector(".search-snap");
 const btnSearchWindowClose = document.querySelector("#btn-search-close");
 const AddSrchEngine = document.querySelector("#search-engine-add");
 
+//site adder window
+const siteAdderWindow = document.querySelector(".siteAdder-window");
+const btnSiteAdderClose = document.querySelector("#btn-siteAdder-close");
+const inputSiteAdderName = document.querySelector("#input-siteAdder-siteName");
+const inputSiteAdderURL = document.querySelector("#input-siteAdder-siteURL");
+const inputSiteAdderShortKey = document.querySelector(
+  "#input-siteAdder-siteShortkey"
+);
+const divSiteAdderShortKey = document.querySelector("#siteAdder-shortKey");
+
 //userApps
 const userApps = document.querySelector(".userApp");
 
@@ -305,19 +315,46 @@ function handelSearchWindow(e) {
 }
 
 function addSearchEngine() {
-  console.log("adding search engine.....");
+  divSiteAdderShortKey.classList.add("add");
+  siteAdderWindow.classList.add("add");
 }
 
+function handelSiteAdder(e) {
+  if (e === "AddSrchEngine") {
+    siteAdderWindow.classList.add("add");
+    console.log(inputSiteAdderName.textContent);
+
+    if (inputSiteAdderName.textContent && inputSiteAdderURL.textContent) {
+      btnSiteAdderClose.textContent = "Add Site";
+      addSiteData(
+        "srchEngine",
+        inputSiteAdderName.textContent,
+        inputSiteAdderURL.textContent,
+      );
+    }
+  }
+  if (e === "close") {
+    divSiteAdderShortKey.classList.remove("add");
+    siteAdderWindow.classList.remove("add");
+  }
+
+  console.log("site adder fucntion invoked!" + e);
+}
+
+btnSiteAdderClose.addEventListener("click", function (e) {
+  handelSiteAdder("close");
+});
 labelEngineName.addEventListener("click", function (e) {
   handelSearchWindow();
 });
 
 btnSearchWindowClose.addEventListener("click", function (e) {
-  handelSearchWindow();
+  handelSearchWindow("close");
 });
 
 AddSrchEngine.addEventListener("click", function (e) {
-  addSearchEngine();
+  srchEngineWindow.classList.remove("add", "fade-out-short");
+  handelSiteAdder("AddSrchEngine");
 });
 
 //------------------------------------------ data storge------------------------------------------
