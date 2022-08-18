@@ -19,6 +19,7 @@ const srchEngineWindow = document.querySelector(".search-selector");
 const srchEngineSnapArea = document.querySelector(".search-engine-snap");
 const srchEngineSnap = document.querySelector(".search-snap");
 const btnSearchWindowClose = document.querySelector("#btn-search-close");
+const AddSrchEngine = document.querySelector("#search-engine-add");
 
 //userApps
 const userApps = document.querySelector(".userApp");
@@ -302,12 +303,21 @@ function handelSearchWindow(e) {
     }, 1500.1);
   }
 }
+
+function addSearchEngine() {
+  console.log("adding search engine.....");
+}
+
 labelEngineName.addEventListener("click", function (e) {
   handelSearchWindow();
 });
 
 btnSearchWindowClose.addEventListener("click", function (e) {
   handelSearchWindow();
+});
+
+AddSrchEngine.addEventListener("click", function (e) {
+  addSearchEngine();
 });
 
 //------------------------------------------ data storge------------------------------------------
