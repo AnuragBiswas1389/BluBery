@@ -24,6 +24,7 @@ const AddSrchEngine = document.querySelector("#search-engine-add");
 //site adder window
 const siteAdderWindow = document.querySelector(".siteAdder-window");
 const btnSiteAdderClose = document.querySelector("#btn-siteAdder-close");
+const btnSiteAdderAdd = document.querySelector("#btn-siteAdder-add");
 const inputSiteAdderName = document.querySelector("#input-siteAdder-siteName");
 const inputSiteAdderURL = document.querySelector("#input-siteAdder-siteURL");
 const inputSiteAdderShortKey = document.querySelector(
@@ -62,12 +63,39 @@ const inputSetupAnswer = document.querySelector("#inputAnswer");
 var notifID = 0;
 var db = null; //indexedDB refernce variable
 var convoComplete = false;
-
+var srchEngineID = 0;
 // ---------- universal date ------------
 const now = new Date();
 const day = now.getDay();
 const dt = now.getDate();
 const month = now.getMonth();
+
+const defSrchEngine = [
+  {
+    id: 1,
+    name: "Google",
+    shortkey: "goo",
+    siteURL: "https://www.google.com/search?q=",
+  },
+  {
+    id: 2,
+    name: "DuckDuckGo",
+    shortkey: "duck",
+    siteURL: "https://duckduckgo.com/?q=",
+  },
+  {
+    id: 3,
+    name: "YouTube",
+    shortkey: "yt",
+    siteURL: "https://www.youtube.com/results?search_query=",
+  },
+  {
+    id: 4,
+    name: "Wikipedia",
+    shortkey: "wiki",
+    siteURL: "https://en.wikipedia.org/wiki/Special:Search?search=",
+  },
+];
 
 // --control calls--
 
@@ -78,6 +106,13 @@ function startApp() {
     loadApp();
   } else {
     setUp();
+    onSetupDB();
+    defSrchEngine.forEach((e) => {
+      addSrchEngineData(e);
+    });
+    localStorage.setItem("srchEngineID", "4");
+    localStorage.setItem("srchEngineName", "Google");
+    localStorage.setItem("srchEngineURL", "https://www.google.com/search?q=");
   }
 }
 
@@ -285,6 +320,10 @@ function greeting() {
 
 //--------------------------------------------setting the search Functionality-----------------------------------------
 
+inputText.addEventListener("keypress", function (e) {
+  handelWindowKeypress(e);
+});
+
 labelEngineName.innerText = "change engine?";
 
 setTimeout(function () {
@@ -292,14 +331,21 @@ setTimeout(function () {
 }, 4500);
 
 btnSearch.addEventListener("click", function (e) {
+  handelWindowKeypress((e = "Enter"));
+});
+
+function handelWindowKeypress(e) {
   const searchText = inputText.value.split(" ").join("+");
   console.log(searchText);
   const srchEngineURl = localStorage.getItem("srchEngineURL");
 
-  if (searchText != "") {
-    window.open(`${srchEngineURl}=${searchText}`);
+  //for when enter key is pressed____
+  if (e == "Enter" || e.key == "Enter") {
+    if (searchText != "") {
+      window.open(`${srchEngineURl}=${searchText}`);
+    }
   }
-});
+}
 
 // --------------------------------------search engine selector window function---------------------
 
@@ -322,28 +368,24 @@ function addSearchEngine() {
 function handelSiteAdder(e) {
   if (e === "AddSrchEngine") {
     siteAdderWindow.classList.add("add");
-    console.log(inputSiteAdderName.textContent);
-
-    if (inputSiteAdderName.textContent && inputSiteAdderURL.textContent) {
-      btnSiteAdderClose.textContent = "Add Site";
-      addSiteData(
-        "srchEngine",
-        inputSiteAdderName.textContent,
-        inputSiteAdderURL.textContent,
-      );
-    }
   }
   if (e === "close") {
     divSiteAdderShortKey.classList.remove("add");
     siteAdderWindow.classList.remove("add");
   }
-
-  console.log("site adder fucntion invoked!" + e);
+  if (e == "srchEngineData") {
+    addSrchEngineData();
+  }
 }
+
+btnSiteAdderAdd.addEventListener("click", function (e) {
+  handelSiteAdder("srchEngineData");
+});
 
 btnSiteAdderClose.addEventListener("click", function (e) {
   handelSiteAdder("close");
 });
+
 labelEngineName.addEventListener("click", function (e) {
   handelSearchWindow();
 });
@@ -359,8 +401,6 @@ AddSrchEngine.addEventListener("click", function (e) {
 
 //------------------------------------------ data storge------------------------------------------
 
-initDB("firstDB", "3", "allNames", "id");
-
 // objStore={name:"objectStoreName", keyPath: "keyPath"}
 function initDB(dbname, version, objectStoreName, keypath) {
   const request = indexedDB.open(dbname, version);
@@ -373,6 +413,7 @@ function initDB(dbname, version, objectStoreName, keypath) {
 
   request.onsuccess = (e) => {
     db = e.target.result;
+    console.log(`dataBase created ${(dbname, version, objectStoreName)}`);
   };
   request.onerror = (e) => {
     alert("Database Error Occured!" + e);
@@ -390,6 +431,76 @@ function insertData(dbname, dbObjName, data) {
     const objStore = tx.objectStore(dbo);
     objStore.add(data);
   };
+  request.onerror = (e) => {
+    alert("Sorry an Error Occured!" + e);
+  };
 }
 
 // ------------------------------------------------------App data loading--------------------------------------------
+function onSetupDB() {
+  initDB("user", "1", "config", "id");
+  initDB("apps", "1", "userApps", "id");
+  initDB("srchEngine", "1", "srchEngine", "id");
+  initDB("history", "1", "userHistory", "id");
+}
+
+function addSrchEngineData(data) {
+  const siteName = inputSiteAdderName.value;
+  const siteURL = inputSiteAdderURL.value;
+  const siteShortkey = inputSiteAdderShortKey.value;
+  var data;
+  if ((siteName && siteShortkey && siteURL) || data) {
+    const id = +localStorage.getItem("srchEngineID") + 1;
+    localStorage.setItem("srchEngineID", id);
+    if (!data) {
+      data = {
+        id: id,
+        name: siteName,
+        shortkey: siteShortkey,
+        siteURL: siteURL,
+      };
+    }
+    insertData("srchEngine", "srchEngine", data);
+    handelSiteAdder("close");
+  } else {
+    alert("Enter all fields!");
+  }
+}
+
+// ------------------------------------------------------fetch data --------------------------------------------
+
+function fetchAppData(dbname, objStore, target) {
+  const request = indexedDB.open(dbname);
+  request.onsuccess = (e) => {
+    db = e.target.result;
+
+    const txn = db.transaction(objStore, "readonly");
+    const objectStore = txn.objectStore(objStore);
+
+    objectStore.openCursor().onsuccess = (event) => {
+      let cursor = event.target.result;
+      if (cursor) {
+        let obj = cursor.value;
+
+        // continue next record
+        const snap = ` <div class="search-snap">
+            <img src="icons/google.svg" alt="icon" class="icon-small">
+            <div class="search-snap-title">
+             ${obj.name}
+            </div>
+          </div> `;
+          const absURL = new URL(obj.siteURL);
+        console.log(obj);
+        const favIconUrl = `https://www.${absURL}
+        /favicon.ico`;
+        console.log(favIconUrl);
+
+        cursor.continue();
+      }
+    };
+    // close the database connection
+    txn.oncomplete = function () {
+      db.close();
+    };
+  };
+}
