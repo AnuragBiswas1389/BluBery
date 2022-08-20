@@ -190,7 +190,7 @@ body {
   z-index: 100;
   right: 1rem;
   width: 32rem;
-  height: 22rem;
+  height: 25rem;
   background-color: rgba(229, 224, 230, 0.753);
   border-style: none;
   border-radius: 10px;
@@ -208,7 +208,7 @@ body {
 .search-engine-snap {
   display: flex;
   flex-direction: row;
-  justify-content: center;
+  justify-content: start;
   align-items: center;
   flex-wrap: wrap;
 }
@@ -238,6 +238,19 @@ body {
   color: rgb(71, 69, 69);
   cursor: pointer;
 }
+.search-engineAdd {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-right: 10px;
+}
+.srch-engine-btn{
+  margin: auto;
+  cursor: pointer;
+}
+
 /* -----------------------------------------------site adder-------------------------------- */
 .siteAdder-window {
   display: none;
@@ -514,10 +527,10 @@ input.form-control:focus {
 }
 
 .fade-in-short {
-  -webkit-animation: fadein 1s; /* Safari, Chrome and Opera > 12.1 */
-  -moz-animation: fadein 1s; /* Firefox < 16 */
-  -ms-animation: fadein 1s; /* Internet Explorer */
-  animation: fadein 1s;
+  -webkit-animation: fadein 0.6s; /* Safari, Chrome and Opera > 12.1 */
+  -moz-animation: fadein 0.6s; /* Firefox < 16 */
+  -ms-animation: fadein 0.6s; /* Internet Explorer */
+  animation: fadein 0.6s;
 }
 
 @keyframes fadein {
@@ -555,11 +568,11 @@ input.form-control:focus {
   }
 }
 
-.fade-out {
-  -webkit-animation: fadeout 2.5s; /* Safari, Chrome and Opera > 12.1 */
-  -moz-animation: fadeout 2.5s; /* Firefox < 16 */
-  -ms-animation: fadeout 2.5s; /* Internet Explorer */
-  animation: fadeout 2.5s;
+.fade-out-short {
+  -webkit-animation: fadein 0.6s; /* Safari, Chrome and Opera > 12.1 */
+  -moz-animation: fadein 0.6s; /* Firefox < 16 */
+  -ms-animation: fadein 0.6s; /* Internet Explorer */
+  animation: fadein 0.6s;
 }
 
 @keyframes fadeout {

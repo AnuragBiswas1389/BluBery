@@ -20,8 +20,10 @@ const srchEngineSnapArea = document.querySelector(".search-engine-snap");
 const srchEngineSnap = document.querySelector(".search-snap");
 const btnSearchWindowClose = document.querySelector("#btn-search-close");
 const AddSrchEngine = document.querySelector("#search-engine-add");
+const btnSrchEngineRemove = document.querySelector("#search-engine-delete");
 
 //site adder window
+const siteAdderContainer = document.querySelector(".siteAdder-container");
 const siteAdderWindow = document.querySelector(".siteAdder-window");
 const btnSiteAdderClose = document.querySelector("#btn-siteAdder-close");
 const btnSiteAdderAdd = document.querySelector("#btn-siteAdder-add");
@@ -356,6 +358,7 @@ function handelSearchWindow(e) {
     srchEngineWindow.classList.add("fade-out-short");
     setTimeout(function () {
       srchEngineWindow.classList.remove("add", "fade-out-short");
+      srchEngineSnapArea.innerHTML = "";
     }, 1500.1);
   }
 }
@@ -377,6 +380,32 @@ function handelSiteAdder(e) {
     addSrchEngineData();
   }
 }
+// 33333333333333333333333333333333333333 add srch engien remove fucntionality
+function srchEngineRemove(e) {
+  if (e === "init-remove") {
+    alert("select search engine to remove.");
+  } else if (e !== "init-remove" && e) {
+    console.log(e);
+  }
+}
+
+let intiRemoveSrchEngine = false;
+
+const srchEngines = document.querySelectorAll("#srchEngine");
+
+srchEngines.forEach((e) => {
+  e.addEventListener("click", function (e) {
+    // localStorage.setItem("srchEngineUrl",e.siteURL);
+    // localStorage.setItem("srchEngineName",e.name)
+    console.log(e);
+  });
+  console.log(e);
+});
+
+btnSrchEngineRemove.addEventListener("click", function (e) {
+  srchEngineRemove("init-remove");
+  intiRemoveSrchEngine = true;
+});
 
 btnSiteAdderAdd.addEventListener("click", function (e) {
   handelSiteAdder("srchEngineData");
@@ -388,6 +417,7 @@ btnSiteAdderClose.addEventListener("click", function (e) {
 
 labelEngineName.addEventListener("click", function (e) {
   handelSearchWindow();
+  fetchAppData("srchEngine", "srchEngine", "srchEngineWindow");
 });
 
 btnSearchWindowClose.addEventListener("click", function (e) {
@@ -395,7 +425,7 @@ btnSearchWindowClose.addEventListener("click", function (e) {
 });
 
 AddSrchEngine.addEventListener("click", function (e) {
-  srchEngineWindow.classList.remove("add", "fade-out-short");
+  handelSearchWindow();
   handelSiteAdder("AddSrchEngine");
 });
 
@@ -449,8 +479,13 @@ function addSrchEngineData(data) {
   const siteURL = inputSiteAdderURL.value;
   const siteShortkey = inputSiteAdderShortKey.value;
   var data;
+  const maxSrchEngine = 15;
   if ((siteName && siteShortkey && siteURL) || data) {
     const id = +localStorage.getItem("srchEngineID") + 1;
+    if (id > maxSrchEngine) {
+      alert(`You cannot add more than ${maxSrchEngine} search engine!`);
+      return "";
+    }
     localStorage.setItem("srchEngineID", id);
     if (!data) {
       data = {
@@ -470,6 +505,7 @@ function addSrchEngineData(data) {
 // ------------------------------------------------------fetch data --------------------------------------------
 
 function fetchAppData(dbname, objStore, target) {
+  let obj;
   const request = indexedDB.open(dbname);
   request.onsuccess = (e) => {
     db = e.target.result;
@@ -480,21 +516,25 @@ function fetchAppData(dbname, objStore, target) {
     objectStore.openCursor().onsuccess = (event) => {
       let cursor = event.target.result;
       if (cursor) {
-        let obj = cursor.value;
+        obj = cursor.value;
 
         // continue next record
-        const snap = ` <div class="search-snap">
-            <img src="icons/google.svg" alt="icon" class="icon-small">
+        if (target === "srchEngineWindow") {
+          const html = `  <div class="search-snap">
+            <img src="icons/google.svg" alt="icon" class=" srchEngine icon-small" data-id="${obj.id}" data-name="${obj.name}" data-siteURl="${obj.siteURL}">
             <div class="search-snap-title">
-             ${obj.name}
+              ${obj.name}
             </div>
-          </div> `;
-          const absURL = new URL(obj.siteURL);
+          </div>  `;
+          srchEngineSnapArea.insertAdjacentHTML("afterbegin", html);
+          console.log(html);
+        } else if (target === "userApps") {
+          const appSnap = `<div class="appSnap">
+          <img src="icons/${obj.icon}" alt="ico">
+        </div>`;
+          userApps.insertAdjacentHTML("afterbegin", appSnap);
+        }
         console.log(obj);
-        const favIconUrl = `https://www.${absURL}
-        /favicon.ico`;
-        console.log(favIconUrl);
-
         cursor.continue();
       }
     };
