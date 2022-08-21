@@ -36,7 +36,7 @@ const divSiteAdderShortKey = document.querySelector("#siteAdder-shortKey");
 
 //userApps
 const userApps = document.querySelector(".userApp");
-
+const btnAddUserApps = document.querySelector("#btn-userApp-add");
 //greetings
 const greet = document.querySelector(".greetings");
 
@@ -344,7 +344,7 @@ function handelWindowKeypress(e) {
   //for when enter key is pressed____
   if (e == "Enter" || e.key == "Enter") {
     if (searchText != "") {
-      window.open(`${srchEngineURl}=${searchText}`);
+      window.open(`${srchEngineURl}${searchText}`);
     }
   }
 }
@@ -368,8 +368,23 @@ function addSearchEngine() {
   siteAdderWindow.classList.add("add");
 }
 
+function activateSrchEngine(e) {
+  // if (e.target.dataset.name==="undefined") {
+  //   return;
+  // }
+  // console.log(e);
+  // var siteName = e.target.dataset.name;
+  // var siteUrl = e.target.dataset.url;
+  // console.log(siteName + siteUrl);
+
+  // alert(`${siteName} is set as your search engine!"`);
+  // localStorage.setItem("srchEngineUrl", e.target.dataset.url);
+  // localStorage.setItem("srchEngineName", e.target.dataset.name);
+  handelSearchWindow();
+}
+
 function handelSiteAdder(e) {
-  if (e === "AddSrchEngine") {
+  if (e === "AddSrchEngine" || "addApp") {
     siteAdderWindow.classList.add("add");
   }
   if (e === "close") {
@@ -393,13 +408,8 @@ let intiRemoveSrchEngine = false;
 
 const srchEngines = document.querySelectorAll("#srchEngine");
 
-srchEngines.forEach((e) => {
-  e.addEventListener("click", function (e) {
-    // localStorage.setItem("srchEngineUrl",e.siteURL);
-    // localStorage.setItem("srchEngineName",e.name)
-    console.log(e);
-  });
-  console.log(e);
+srchEngineWindow.addEventListener("click", function (e) {
+  activateSrchEngine(e);
 });
 
 btnSrchEngineRemove.addEventListener("click", function (e) {
@@ -428,6 +438,28 @@ AddSrchEngine.addEventListener("click", function (e) {
   handelSearchWindow();
   handelSiteAdder("AddSrchEngine");
 });
+//------------------------------------------ user apps loading------------------------------------------
+
+// const userApps = document.querySelector(".userApp");
+// const btnAddUserApps = document.querySelector("#btn-userApp-add");
+
+function handelUserAppClick(e) {
+  const isSite = e.target.dataset.site;
+  const appUrl = e.target.dataset.url;
+
+  if (isSite && appUrl.includes("https://")) {
+    window.open(appUrl);
+  }
+}
+
+function addUserApp() {
+  handelSiteAdder("addApp");
+}
+
+userApps.addEventListener("click", function (e) {
+  handelUserAppClick(e);
+});
+btnAddUserApps.addEventListener("click", addUserApp);
 
 //------------------------------------------ data storge------------------------------------------
 
@@ -520,8 +552,8 @@ function fetchAppData(dbname, objStore, target) {
 
         // continue next record
         if (target === "srchEngineWindow") {
-          const html = `  <div class="search-snap">
-            <img src="icons/google.svg" alt="icon" class=" srchEngine icon-small" data-id="${obj.id}" data-name="${obj.name}" data-siteURl="${obj.siteURL}">
+          const html = `<div class="search-snap" data-id="${obj.id}" data-name="${obj.name}" data-url="${obj.siteURL}">
+            <img src="icons/google.svg" alt="icon" class=" srchEngine icon-small" >
             <div class="search-snap-title">
               ${obj.name}
             </div>
